@@ -17,7 +17,7 @@ public class AnimMixer : MonoBehaviour
         anim[baseAnim].layer = 0;
 
         anim[mixingAnim].layer = 1;
-
+        anim[mixingAnim].RemoveMixingTransform(mixingTransform);
         anim[mixingAnim].AddMixingTransform(
         mixingTransform,
         true
@@ -25,7 +25,17 @@ public class AnimMixer : MonoBehaviour
 
         anim.Play(baseAnim);
         anim.Play(mixingAnim);
+        print(transform.gameObject.name);
     }
+
+    void OnDisable()
+{
+    if (anim == null)
+        anim = GetComponent<Animation>();
+
+    anim.Stop(mixingAnim);
+    anim[mixingAnim].RemoveMixingTransform(mixingTransform);
+}
 
     
 }

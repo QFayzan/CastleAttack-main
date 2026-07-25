@@ -42,7 +42,10 @@ public class WeaponAttributes : MonoBehaviour
 
 
 
-        if (weaponID == "NoWeapon") { TPSController.ins.fighter.activeFighterModel.DeselectWeapon(); return; }
+        if (weaponID == "NoWeapon") { TPSController.ins.fighter.activeFighterModel.DeselectWeapon();
+        print("mk");
+        TPSController.ins.fighter.activeFighterModel.fighterAnims.PlayAnim("Idle");
+        return; }
 
         TPSController.ins.SelectWeapon(fighterID,weaponID);
 

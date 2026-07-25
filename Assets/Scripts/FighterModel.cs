@@ -189,6 +189,10 @@ public class FighterModel : MonoBehaviour
         if (isJumping) { return; }
         StartCoroutine(JumpCoroutine(20, .25f));
     }
+    public void HeliUpDown(float Power, float Time)
+    {
+         StartCoroutine(JumpCoroutine(Power, Time));
+    }
 
 
     public IEnumerator JumpCoroutine(float jumpPower, float jumpTime)

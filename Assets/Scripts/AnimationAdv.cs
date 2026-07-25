@@ -26,6 +26,7 @@ public class AnimationAdv : MonoBehaviour
 
         if (animationClipAdv == null)
         {
+            anims.Stop(clipName);
             anims.Play(clipName);
         }
         else 

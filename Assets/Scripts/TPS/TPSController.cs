@@ -112,6 +112,18 @@ public class TPSController : MonoBehaviour
         fighter.activeFighterModel.Jump();
         onJumpBtnPressed?.Invoke();
     }
+    public void HeliUp()
+    {
+        if(fighter.transform.position.y < 13)
+        {
+            fighter.activeFighterModel.HeliUpDown(10,.2f);
+        }
+         
+    }
+    public void heliDown()
+    {
+          fighter.activeFighterModel.HeliUpDown(-10,.2f);
+    }
 
 
     public void OnPointerDown(PointerEventData data)
