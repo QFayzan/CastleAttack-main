@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Robot Shoot
+  m_Name: RobotShoot
   serializedVersion: 7
   m_Legacy: 1
   m_Compressed: 0
@@ -2242,7 +2242,7 @@ AnimationClip:
   m_FloatCurves: []
   m_PPtrCurves: []
   m_SampleRate: 24
-  m_WrapMode: 0
+  m_WrapMode: 1
   m_Bounds:
     m_Center: {x: 0.3374138, y: 1.2112141, z: -0.10588735}
     m_Extent: {x: 1.2636771, y: 1.1950934, z: 0.89355695}

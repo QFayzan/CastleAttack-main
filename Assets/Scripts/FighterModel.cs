@@ -98,7 +98,14 @@ public class FighterModel : MonoBehaviour
     {
         foreach (AnimationState state in fighterAnims.anims)
         {
-            if (state.layer == layer) { fighterAnims.anims.Stop(state.name); }
+            // if (state.layer == layer) { fighterAnims.anims.Stop(state.name); }
+
+            if (state.layer == layer)
+            {
+                state.weight = 0;
+                // Fades the weapon animation out smoothly over 0.25 seconds
+                fighterAnims.GetComponent<Animation>().Blend(state.name, 0f, 0.25f);
+            }
         }
     }
 
@@ -120,12 +127,31 @@ public class FighterModel : MonoBehaviour
         }
     }
 
-    public void DeselectWeapon()
-    {
-        StopLayerAnimations(1);
-        if (activeWeapon != null && activeWeapon.weapon != null) { activeWeapon.weapon.SetActive(false); }
+    //public void DeselectWeapon()
+    //{
+    //    //OG Code
+    //    //StopLayerAnimations(1);
+    //    //if (activeWeapon != null && activeWeapon.weapon != null) { activeWeapon.weapon.SetActive(false); PlayIdleAnim(); }
 
-    }
+
+    //    //AI ANswer
+    //    // Instead of instantly stopping the layer, fade it out over 0.3 seconds.
+    //    // Assuming your legacy animation component is accessible:
+    //    // animation.Blend("YourWeaponHoldAnim", 0f, 0.3f); 
+
+    //    // If you don't have direct access to blend the layer out, 
+    //    // at least CrossFade the idle animation instead of using .Play()
+
+    //    if (activeWeapon != null && activeWeapon.weapon != null)
+    //    {
+    //        activeWeapon.weapon.SetActive(false);
+
+    //        // Replace PlayIdleAnim() with a CrossFade equivalent
+    //        // Example: legacyAnimation.CrossFade("Idle", 0.25f);
+    //    }
+
+
+    //}
 
 
     public void BlendWeaponHoldAnim()
@@ -150,6 +176,8 @@ public class FighterModel : MonoBehaviour
     public void AttackStopped()
     {
         if (activeWeapon.onlyActivateOnAttack != null) { activeWeapon.onlyActivateOnAttack.SetActive(false); }
+
+        
     }
 
 
@@ -158,7 +186,9 @@ public class FighterModel : MonoBehaviour
     {
         fighter.fighterLoopAnimsAudioSource.Stop();
 
-        fighterAnims.PlayAnim("Idle");
+        //fighterAnims.PlayAnim("Idle");
+
+        fighterAnims.anims.CrossFade("Idle",0.25f);
     }
 
 
@@ -237,5 +267,22 @@ public class FighterModel : MonoBehaviour
     {
         fighter.isMoving = false;
         fighter.isMovingWithFullIntensity = false;
+    }
+
+
+    //fixes for animation
+
+  
+
+    public void DeselectWeapon()
+    {
+        // We MUST tell both the holding layer (1) and attack layer (2) to let go of the arms
+        StopLayerAnimations(1);
+        StopLayerAnimations(2);
+
+        if (activeWeapon != null && activeWeapon.weapon != null)
+        {
+            activeWeapon.weapon.SetActive(false);
+        }
     }
 }

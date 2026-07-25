@@ -9072,7 +9072,7 @@ MonoBehaviour:
     lookForwardLock: 0
     lookForwardOnAttack: 1
     weaponHoldingAnimName: 
-    weaponAttackAnimName: Robot Shoot
+    weaponAttackAnimName: 
     weapon: {fileID: 423445541}
     shootingWeapon: {fileID: 423445544}
     onlyActivateOnAttack: {fileID: 0}
@@ -9109,7 +9109,7 @@ Animation:
   - {fileID: 7400000, guid: 7da69f4bb94730640a4a62f7416c531a, type: 2}
   - {fileID: 7400000, guid: 012264c8b3b77ab47b6cb86e65b1c2a2, type: 2}
   - {fileID: 7400000, guid: 95dfc288db2662b48936e7eab5d07ff4, type: 2}
-  - {fileID: 7400000, guid: 5034c8c17508c7e48b26a9f61310de64, type: 2}
+  - {fileID: 7400000, guid: d0bcef159f8ef36479b28284d4b0ce40, type: 2}
   - {fileID: -203655887218126122, guid: 6f00474c476755e4f8387fcda37a0997, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0

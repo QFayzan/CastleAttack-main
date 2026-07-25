@@ -31,6 +31,17 @@ public class WeaponAttributes : MonoBehaviour
 
     public void SelectWeapon()
     {
+
+        if (fighterID != "Heli")
+        {
+            TPSController.ins.fighter.isFlying = false;
+
+        }
+        else
+        {
+            TPSController.ins.fighter.isFlying = true;
+        }
+
         WeaponManager.ins.activeWeapon = this;
 
         for (int i = 0; i < WeaponManager.ins.weaponSelectBtns.childCount; i++)
@@ -43,21 +54,12 @@ public class WeaponAttributes : MonoBehaviour
 
 
         if (weaponID == "NoWeapon") { TPSController.ins.fighter.activeFighterModel.DeselectWeapon();
-        print("mk");
+       
         TPSController.ins.fighter.activeFighterModel.fighterAnims.PlayAnim("Idle");
         return; }
 
         TPSController.ins.SelectWeapon(fighterID,weaponID);
 
-        if (weaponID == "Heli")
-        {
-            TPSController.ins.fighter.isFlying = true;
-
-        }
-        else
-        {
-            TPSController.ins.fighter.isFlying = false;
-        }
 
         return;
 
