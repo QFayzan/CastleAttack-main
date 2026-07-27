@@ -16,7 +16,7 @@ public class GameplayScreen : MonoBehaviour
     public WeaponAttributes pistolBtn;
 
     public Button attackFromLeftBtn, takeCoverBtn, attackFromRightBtn;
-    public GameObject jumpBtn, attackBtn, face1Btn, face2Btn, weaponAim;
+    public GameObject jumpBtn, attackBtn, attack2Btn, face1Btn, face2Btn, weaponAim;
     public GameObject climbBtn;
     public GameObject dropBtn;
     public Slider trajectoryAimingStrength;

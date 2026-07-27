@@ -18,6 +18,11 @@ public class TPSController : MonoBehaviour
 
     public Image attackColliderImage;
     public Image attackBtnBg;
+
+    [Header("For Second WEapons")]
+    public Image attackColliderImageTwo;
+    public Image attackBtnBgTwo;
+
     public LayerMask shootLayers;
 
     public GameObject weaponAim, attackBtn;
@@ -57,7 +62,13 @@ public class TPSController : MonoBehaviour
         pointerUpEntry.callback.AddListener((data) => { OnPointerUp((PointerEventData)data); });
         eventTrigger.triggers.Add(pointerUpEntry);
 
+
+       
+
         fighter.activeFighterModel = null;
+
+
+
         SelectWeapon("Stubby","Hands");
     }
 
@@ -114,15 +125,28 @@ public class TPSController : MonoBehaviour
     }
     public void HeliUp()
     {
-        if(fighter.transform.position.y < 13)
+        if(fighter.transform.position.y < 8)
         {
             fighter.activeFighterModel.HeliUpDown(10,.2f);
         }
+        else
+        {
+            fighter.transform.position = new Vector3(fighter.transform.position.x,8,fighter.transform.position.z);
+        }
          
     }
-    public void heliDown()
+    public void HeliDown()
     {
-          fighter.activeFighterModel.HeliUpDown(-10,.2f);
+        if (fighter.transform.position.y > 0.5)
+        {
+            fighter.transform.position = new Vector3(fighter.transform.position.x,
+                fighter.transform.position.y - 2,
+                fighter.transform.position.z);
+        }
+        else
+        {
+            fighter.transform.position = new Vector3(fighter.transform.position.x, 0.5f, fighter.transform.position.z);
+        }
     }
 
 
@@ -169,6 +193,37 @@ public class TPSController : MonoBehaviour
             yield return new WaitForSeconds(fighter.GetActiveWeapon().attackInterval);
         }
     }
+    //Second Weapon Try
+    public void OnPointerDownTwo()
+    {
+        attackBtnBgTwo.color = Color.green;
+        StartCoroutine(nameof(SecondAttack));
+        
+    }
+    public void OnPointerUpTwo()
+    {
+        attackBtnBgTwo.color = Color.white;
+        StopCoroutine(nameof(SecondAttack));
+       
+       
+    }
+    IEnumerator SecondAttack()
+    {
+        while (true)
+        {
+
+            if (fighter.GetSecondaryWeapon().shootingWeapon != null)
+            {
+               
+                if (fighter.GetSecondaryWeapon().shootingWeapon.aimShooting) { Shoot(fighter.GetSecondaryWeapon().shootingWeapon); }
+                if (fighter.GetSecondaryWeapon().shootingWeapon.physicsProjectileShooting) { fighter.GetSecondaryWeapon().shootingWeapon.ShootPhysicsProjectile(); }
+
+                Camera.main.transform.DOShakePosition(.2f, .1f);
+            }
+            yield return new WaitForSeconds(fighter.GetSecondaryWeapon().attackInterval);
+        }
+    }
+
 
     void Shoot(ShootingWeaponModel shootingWeapon)
     {

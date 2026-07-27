@@ -115,7 +115,9 @@ public class ShootingWeaponModel : MonoBehaviour
 
 
     public void ShootAtTarget(RaycastHit raycastHit)
-    {
+    { 
+        
+        
         if (muzzleFlash != null) 
         {
             StopCoroutine("ActivateMuzzleFlash");
@@ -124,6 +126,8 @@ public class ShootingWeaponModel : MonoBehaviour
 
         Vector3 impactSpawnPos = raycastHit.point + raycastHit.normal * 0.01f;
 
+        Vector3 destination = raycastHit.point;
+
         // Rotate decal to match surface
         Quaternion rot = Quaternion.LookRotation(raycastHit.normal);
 
@@ -131,8 +135,19 @@ public class ShootingWeaponModel : MonoBehaviour
         if (projectilePrefab != null)
         {
             //projectileSpawnPoint.LookAt(raycastHit.point);
+           
+            if(raycastHit.point!=null)
+            {
+                 destination = raycastHit.point;
+            }
+            else
+            {
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                destination = ray.GetPoint(2000);
 
-            Vector3 destination = raycastHit.point;
+            }
+
+           
             
             Transform projectileClone = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
 

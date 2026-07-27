@@ -35,6 +35,10 @@ public class FighterModel : MonoBehaviour
     public bool isRunning;
     public bool isJumping;
 
+    [Header("Secondary Weapon Try")]
+    public bool isTwoWeapon = false;
+    public WeaponInfo secondaryWeapon;
+
 
     [System.Serializable]
     public class WeaponInfo
@@ -87,6 +91,9 @@ public class FighterModel : MonoBehaviour
             }
 
         }
+
+        GameplayScreen.ins.attack2Btn.SetActive(isTwoWeapon);
+        
         
 
     }

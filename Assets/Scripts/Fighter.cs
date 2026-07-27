@@ -88,6 +88,7 @@ public class Fighter : MonoBehaviour
             }
             else { fighterModel.gameObject.SetActive(false); }
         }
+        GameplayScreen.ins.attack2Btn.SetActive(activeFighterModel.isTwoWeapon);
     }
 
 
@@ -112,6 +113,12 @@ public class Fighter : MonoBehaviour
     {
         return activeFighterModel.activeWeapon;
     }
+
+    public FighterModel.WeaponInfo GetSecondaryWeapon()
+    {
+        return activeFighterModel.secondaryWeapon;
+    }
+
 
    
 
