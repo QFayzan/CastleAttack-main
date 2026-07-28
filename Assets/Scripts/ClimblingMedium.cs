@@ -48,8 +48,8 @@ public class ClimblingMedium : MonoBehaviour
 
         TPSController.ins.fighter.enabled = false;
 
-        TPSController.ins.fighter.fighterModels.gameObject.SetActive(false);
-        TPSController.ins.fighter.climbAnimation.gameObject.SetActive(true);
+        //TPSController.ins.fighter.fighterModels.gameObject.SetActive(false);
+        //TPSController.ins.fighter.climbAnimation.gameObject.SetActive(true);
 
 
         TPSController.ins.fighter.transform.position = lowerPoint.position;
@@ -59,6 +59,7 @@ public class ClimblingMedium : MonoBehaviour
         Transform camTarget = CameraController.ins.camTarget;
 
         CameraController.ins.SetCamTarget(TPSController.ins.camDefaultPosition);
+        TPSController.ins.fighter.PlayClimbAnim();
 
         TPSController.ins.fighter.transform.DOMove(upperPoint.position, 4).SetEase(Ease.Linear).OnComplete(delegate 
         {
@@ -70,8 +71,10 @@ public class ClimblingMedium : MonoBehaviour
             //TPSController.ins.GetComponent<TPSController>().enabled = true;
             //TPSController.ins.GetComponent<CharacterController>().enabled = true;
 
-            TPSController.ins.fighter.fighterModels.gameObject.SetActive(true);
-            TPSController.ins.fighter.climbAnimation.gameObject.SetActive(false);
+            //TPSController.ins.fighter.fighterModels.gameObject.SetActive(true);
+            //TPSController.ins.fighter.climbAnimation.gameObject.SetActive(false);
+            TPSController.ins.fighter.PlayIdleAnim();
+
 
             CameraController.ins.SetCamTarget(camTarget);
 

@@ -36,7 +36,7 @@ public class TPSController : MonoBehaviour
 
 
 
-    void Start()
+    IEnumerator Start()
     {
         if (joystick != null) { joystick.onJoystickHalfDown += OnJoystickHalfDown; }
         if (joystick != null) { joystick.onJoystickFullDown += OnJoystickFullDown; }
@@ -68,7 +68,7 @@ public class TPSController : MonoBehaviour
         fighter.activeFighterModel = null;
 
 
-
+        yield return new WaitForSeconds(1);
         SelectWeapon("Stubby","Hands");
     }
 

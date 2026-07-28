@@ -26,6 +26,20 @@ public class ShootingWeaponModel : MonoBehaviour
     public int trajectoryPoints = 30;
     public float timeBetweenPoints = 0.1f;
     public LayerMask collisionMask;
+    public Transform trajectoryBarrel;
+
+    [Header("Weapon Wheels Stuff")]
+    public Transform leftWheel;
+    public Transform rightWheel;
+
+    [Tooltip("Base visual rotation speed when moving forward/backward.")]
+    public float baseRotationSpeed = 300f;
+
+    [Tooltip("How much faster the wheel spins when turning in its direction.")]
+    public float turnSpeedBoost = 200f;
+
+    // Define the local axis your wheels spin on (usually right or forward depending on the 3D model)
+    private Vector3 rotationAxis = Vector3.right;
 
 
     void OnEnable()
@@ -59,7 +73,9 @@ public class ShootingWeaponModel : MonoBehaviour
         {
             DrawTrajectory();
         }
+      
     }
+    
 
     void DrawTrajectory()
     {
@@ -92,6 +108,21 @@ public class ShootingWeaponModel : MonoBehaviour
                 }
             }
         }
+
+        // --- BARREL X-AXIS ROTATION LOGIC ---
+
+        // 1. Convert your 5 to 20 force range into a 0.0 to 1.0 percentage
+        float forcePercentage = Mathf.InverseLerp(5f, 20f, force);
+
+        // 2. Map that percentage to your angle. 
+        // force = 5 results in -15, force = 20 results in +15.
+        float xAngle = Mathf.Lerp(-15f, 15f, forcePercentage);
+
+        // (Remember: if it tilts the wrong way in Unity, swap to Mathf.Lerp(15f, -15f, forcePercentage))
+
+        // 3. Apply the angle to the barrel in Local Space, leaving Y and Z alone.
+        Vector3 currentLocalEuler = trajectoryBarrel.localEulerAngles;
+        trajectoryBarrel.localEulerAngles = new Vector3(-xAngle, currentLocalEuler.y, currentLocalEuler.z);
     }
 
 
@@ -194,5 +225,36 @@ public class ShootingWeaponModel : MonoBehaviour
         muzzleFlash.SetActive(true);
         yield return new WaitForSeconds(.2f);
         muzzleFlash.SetActive(false);
+    }
+
+    //Rotate Wheel Cosmetic
+    public void RotateWheelsCosmetic(Vector3 dir)
+    {
+        // 1. Extract inputs based on your formula
+        float forwardInput = -dir.x; // W/S or Forward/Back
+        float turnInput = dir.z;     // A/D or Left/Right
+
+        // 2. Start with the base speed for both wheels
+        float leftSpeed = forwardInput * baseRotationSpeed;
+        float rightSpeed = forwardInput * baseRotationSpeed;
+
+        // 3. Apply the "turn boost" based on left/right input
+        if (turnInput < 0) // Turning Left
+        {
+            // Make the left wheel spin much faster (Mathf.Abs ensures we ADD speed regardless of forward/back direction)
+            leftSpeed += Mathf.Abs(turnInput) * turnSpeedBoost * Mathf.Sign(forwardInput != 0 ? forwardInput : 1);
+        }
+        else if (turnInput > 0) // Turning Right
+        {
+            // Make the right wheel spin much faster
+            rightSpeed += Mathf.Abs(turnInput) * turnSpeedBoost * Mathf.Sign(forwardInput != 0 ? forwardInput : 1);
+        }
+
+        // 4. Apply the rotations locally on their pivots
+        if (leftWheel != null)
+            leftWheel.Rotate(rotationAxis, leftSpeed * Time.deltaTime, Space.Self);
+
+        if (rightWheel != null)
+            rightWheel.Rotate(rotationAxis, rightSpeed * Time.deltaTime, Space.Self);
     }
 }

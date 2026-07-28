@@ -21,6 +21,7 @@ public class GameplayScreen : MonoBehaviour
     public GameObject dropBtn;
     public Slider trajectoryAimingStrength;
 
+
     public Action onAttackFromLeftClicked, onTakeCoverClicked, onAttackFromRightClicked;
 
     //Heli Stuff

@@ -59,6 +59,10 @@ public class Fighter : MonoBehaviour
     {
         activeFighterModel.PlayRunAnim();
     }
+    public void PlayClimbAnim()
+    {
+        activeFighterModel.PlayClimbAnim();
+    }
 
 
 
@@ -83,12 +87,22 @@ public class Fighter : MonoBehaviour
                 else { fighterModel.PlayIdleAnim(); }
 
                 activeFighterModel = fighterModel;
+                GameplayScreen.ins.attack2Btn.SetActive(activeFighterModel.isTwoWeapon);
 
-               
             }
             else { fighterModel.gameObject.SetActive(false); }
         }
-        GameplayScreen.ins.attack2Btn.SetActive(activeFighterModel.isTwoWeapon);
+
+        if (activeFighterModel.fighterID == "Heli")
+
+        { TPSController.ins.fighter.isFlying = true; }
+        else
+        {
+            TPSController.ins.fighter.isFlying = false;
+
+        }
+
+
     }
 
 
@@ -141,6 +155,11 @@ public class Fighter : MonoBehaviour
         else
         { 
             if (!GetActiveWeapon().lookForwardLock) { fighterModels.transform.LookAt(lookAtHelper); } 
+        }
+        if(activeFighterModel.activeWeapon.hasWheels)
+        {
+            
+            activeFighterModel.activeWeapon.shootingWeapon.RotateWheelsCosmetic(dir);
         }
 
     }

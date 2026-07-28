@@ -60,6 +60,8 @@ public class FighterModel : MonoBehaviour
         public float weaponAttackSoundDelay;
 
         public float attackInterval = .2f;
+
+        public bool hasWheels = false;
        
     }
 
@@ -195,7 +197,7 @@ public class FighterModel : MonoBehaviour
 
         //fighterAnims.PlayAnim("Idle");
 
-        fighterAnims.anims.CrossFade("Idle",0.25f);
+        fighterAnims.anims.CrossFade("Idle",0.05f);
     }
 
 
@@ -225,6 +227,10 @@ public class FighterModel : MonoBehaviour
     {
         if (isJumping) { return; }
         StartCoroutine(JumpCoroutine(20, .25f));
+    }
+    public void PlayClimbAnim()
+    {
+        fighterAnims.PlayAnim("Climb");
     }
     public void HeliUpDown(float Power, float Time)
     {
